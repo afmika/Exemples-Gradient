@@ -55,7 +55,7 @@ let points = [
 	points.forEach(point => {
 		let xi = point.x, 
 			yi = point.y;
-		delta_a += -2 * a * xi * (yi - a * xi - b);
+		delta_a += -2 * xi * (yi - a * xi - b);
 		delta_b += -2 * (yi - a * xi - b);
 	});
 
