@@ -47,8 +47,6 @@ function minimiser(fonction, start) {
 }
 
 // EXEMPLE
-// LE FONCTION
-
 
 minimiser(function(x) {
 	return x*x;
