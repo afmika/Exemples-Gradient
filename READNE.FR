@@ -1,0 +1,36 @@
+[ Petites notes :) ]
+* Explication du 'gros', de ce qui se passe pour le gradient ( petite vulgarisation )
+
+* La direction du gradient donne la direction maximisant la fonction
+* Pour minimiser il faut donc aller dans la direction inverse du gradient
+
+Pourquoi calculer avec l'algorithme du gradient ?
+->
+La technique du gradient est utile dans le cas ou on ne sait pas l'expression
+exacte de la fonction a maximiser/minimiser. Si on ne sait pas l'expression de
+la fonction alors il est impossible de calculer son vecteur gradient global.
+Exemple si on ne sait pas f(x) mais qu'on sait que x = 1 alors f(1) = 3 .... etc
+par exemple alors il est impossible de calculer df/dx MAIS on peut calculer
+la derivee locale (gradient local) aux points ou l'on connait la valeur de f.
+
+Exemple si f(x) = x*x et qu'on est sur le plan (O, i, j)
+alors gradient f = ( df / dx ) qui est un vecteur de dimension 1
+
+LA 'composante' de ce vecteur est portee par l'axe des x ou (O, i)
+avec i representant le vecteur de base unitaire de l'axe des x
+
+Donc gradient f = (df/dx) i, [ comme df/dx est un nombre ]
+Pour minimiser on doit aller dans la direction -( df /dx)i
+
+Le nombre x est deja sur l'axe des i donc on se fout du 'i'
+
+Maximiser c'est se deplacer de telle sorte que
+x_k+1 = x_k + (df/dx en x_k)
+
+Minimiser
+x_k+1 = x_k - (df/dx en x_k)
+
+Ce qui se justifie par la logique car df/dx informe du taux de variation
+de f par rapport a la variable x, donc cette quantite encode la position 
+de x pour une variation df au point x_k
+Il est plus commode d'appeler le gradient en un point x_k, le gradient local.
