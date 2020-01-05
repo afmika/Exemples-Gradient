@@ -17,7 +17,7 @@
  let pas = 0.01;
  let x = 1;
  while(etapes > 0) {
-	// gradient negatif si on recherche le max
+	// gradient positif si on recherche le max
 	 x = x + pas * derive_de_f( x );
 	 etapes--;
 	 console.log(x);
