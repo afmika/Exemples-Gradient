@@ -28,7 +28,7 @@ let points = [
 * On calcule Gradient E = Vecteur dont les lignes sont dE/da et dE/ b
 *
 * Calcul des composantes du gradient 
-* dE / da = Somme [-2*a*xi*(yi - a*xi - b )]
+* dE / da = Somme [-2*xi*(yi - a*xi - b )]
 * dE / db =  Somme [-2*(yi - a*xi - b )]
 *
 * On connait donc la direction du vecteur gradient
