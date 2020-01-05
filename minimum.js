@@ -16,7 +16,7 @@
  let pas = 0.01;
  let x = -5;
  while(etapes > 0) {
-	 // gradient negatif si on recherche le min
+	 // sens inverse du gradient si on recherche le min
 	 x = x - pas * derive_de_f( x );
 	 etapes--;
 	 console.log(x);

@@ -59,7 +59,7 @@ let points = [
 		delta_b += -2 * (yi - a * xi - b);
 	});
 
-	// mise a jour :: minimisation = signe negatif au gradient
+	// mise a jour :: minimisation = signe negatif  = sens inverse du gradient
 	a = a - pas * delta_a;
 	b = b - pas * delta_b;
 	etapes--;

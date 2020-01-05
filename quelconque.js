@@ -24,7 +24,7 @@ function maximiser(fonction, start) {
 	let pas = 0.01;
 	let x = start;
 	while(etapes > 0) {
-		// gradient positif si on recherche le max
+		// sens original du gradient si on recherche le max
 		 x = x + pas * derive(fonction, x );
 		 etapes--;
 		 console.log(x);
@@ -38,7 +38,7 @@ function minimiser(fonction, start) {
 	let pas = 0.01;
 	let x = start;
 	while(etapes > 0) {
-		// gradient negatif si on recherche le min
+		// sens inverse du gradient si on recherche le min
 		x = x - pas * derive(fonction, x );
 		etapes--;
 		console.log(x);
