@@ -45,8 +45,8 @@ let points = [
  let etapes = 500;
  let pas = 0.01;
  
- let a = 0; // Math.random();
- let b = 0; // Math.random();
+ let a = 0; //avant c'etait Math.random();
+ let b = 0; //avant c'etait Math.random();
  while(etapes > 0) {
 	// gradient negatif si on recherche le min
 	let delta_a = 0, delta_b = 0;
