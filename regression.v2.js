@@ -51,7 +51,7 @@ let points = [
 	// gradient negatif si on recherche le min
 	let delta_a = 0, delta_b = 0;
 	
-	// calcul dE/da et dE/db
+	// calcul -dE/da et -dE/db
 	points.forEach(point => {
 		let xi = point.x, 
 			yi = point.y;
@@ -59,7 +59,7 @@ let points = [
 		
 		/*
 		Pour un reseaux de neurone cette partie equivaut a :
-		dwi = taux * xi * (yi - si);
+		dwi = -dE/dwi = taux * xi * (yi - si);
 		*/
 		
 		let si = a * xi + b; // juste pour clarifier les choses
