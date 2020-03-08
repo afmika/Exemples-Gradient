@@ -15,11 +15,10 @@ const nombre_population = 100;
 
 
 
-// variable i contenir ny population tsika
 let population = [];
 
 /**
- * Fonctions sy structures utiles
+ * Fonctions + structures utiles
  */
 function Individu(adn) {
 	// mini classe ou objet/structure capturant la notion d'individu
@@ -73,9 +72,6 @@ function evaluerPopulation(population) {
 
 // mutation
 function effectuerMutation(individu) {
-	// ovaina aleatoirement ny gene anle individu
-	// antony : assurena ny diversite anle population otran reny tena anaty nature ireny
-	// otran hoe debile nefa manampy be amin'ny fialana ny maximums locaux
 	for(let i = 0; i < objectif.length; i++) {
 		if(Math.random() <= taux_mutation) {
 			let index_random = Math.floor(Math.random() * alphabet.length);

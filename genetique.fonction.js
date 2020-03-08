@@ -10,11 +10,10 @@ const taux_reproduction = 0.3;
 const nombre_population = 100;
 
 
-// variable i contenir ny population tsika
 let population = [];
 
 /**
- * Fonctions sy structures utiles
+ * Fonctions + structures utiles
  */
 function Individu(adn) {
 	// mini classe ou objet/structure capturant la notion d'individu
@@ -113,7 +112,7 @@ while( generation < generation_max ) {
 	}
 	
 	
-	/*
+	/**
 	* Etape de selection + accouplement
 	**/
 
