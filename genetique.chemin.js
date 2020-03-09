@@ -13,7 +13,7 @@ villes.forEach((ville, index) => {
 	map_ville[ville] = index;
 });
 
-// matrice des distances
+// Matrice des distances
 // Convention : dist(x, y) = infinie si x == y ou qu'elles ne sont pas connectees
 const inf = 1000000; // infinie
 const distances = [
@@ -34,7 +34,7 @@ const nbr_ville_a_survoler = 5; // exemple on doit passer par 6 villes meme si o
 // parametres reglables
 const taux_mutation = 0.2; // proba mutation
 const taux_reproduction = 0.3; // on ne retient que 30% ny population les plus adaptees
-const nombre_population = 10;
+const nombre_population = 50;
 
 
 
@@ -123,9 +123,15 @@ function crossOver(pere, mere) {
 /**
  * Algorithme genetique
  */
-let generation_max = 500;
+let generation_max = 600;
 let generation = 1;
 let ancien_fitest = null;
+
+// gestion affichage evolution
+let stagne = false;
+let need_to_display = false;
+let smthin_displayed = false;
+
 
 initialiserPopulation();
 console.log("Trajectoire minimale entre ", depart, arrive, " en passant par ", nbr_ville_a_survoler, "villes minimum (repetition inclus)");
@@ -140,7 +146,24 @@ while( generation < generation_max ) {
 	let fitest = population[0]; //le fitest
 	if(ancien_fitest != null) {
 		if(fitest.score > ancien_fitest.score) {
-			console.log(fitest.adn.join(""), " => note ",fitest.score , " => Distance tot. ", 1 / fitest.score,"Km, generation ", generation);		
+			stagne = false;
+			smthin_displayed = true;
+			need_to_display = true;
+			console.log(fitest.adn.join(","), " => note ",fitest.score , " => Distance tot. ", 1 / fitest.score,"Km, generation ", generation);		
+		}
+		if( stagne && need_to_display && generation % 50 == 0 ) {
+			smthin_displayed = true;
+			need_to_display = false;
+			console.log(fitest.adn.join(","), " => note ",fitest.score , " => Distance tot. ", 1 / fitest.score,"Km, generation ", generation);				
+		}
+		
+		if(fitest.score == ancien_fitest.score) {
+			stagne = true;
+		}
+		
+		if(!smthin_displayed) {
+			smthin_displayed = true;
+			console.log(fitest.adn.join(","), " => note ",fitest.score , " => Distance tot. ", 1 / fitest.score,"Km, generation ", generation);		
 		}
 	}
 	ancien_fitest = fitest;	
