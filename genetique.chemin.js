@@ -1,17 +1,40 @@
 /**
  * @author afmika
  * 
- * Recherche d'une combinaison de mot dans l'ensemble
- * des possibilites avec un algo genetique de facon efficace
+ * Recherche du chemin le plus court en utilisant un algorithme genetique
  */
- 
-const objectif = "salut bary. ito le phrase tadiavina";
-const alphabet = "abcdefghijklmnopqrstuvwxyz.!?# ";
 
+/**
+ * Dans cet exemple toutes les villes sont reliees
+ */
+const villes = ['A', 'B', 'C', 'D', 'E', 'F'];
+const map_ville = {};  // juste pour faciliter l'identification des distances 
+villes.forEach((ville, index) => {
+	map_ville[ville] = index;
+});
+
+// matrice des distances
+// Convention : dist(x, y) = infinie si x == y ou qu'elles ne sont pas connectees
+const inf = 1000000; // infinie
+const distances = [
+	// A, B, C, D, E, F
+	[inf, 11, inf, inf, inf, 16], // A
+	[11, inf, 1, inf, inf, 13], // B
+	[inf, 1, inf, 13, 14, 26], // C
+	[inf, inf, 13, inf, 8, inf], // D
+	[inf, inf, 14, 8, inf, 11], // E
+	[26, 13, 26, inf, 11, inf], // F
+];
+
+const depart = 'A';
+const arrive = 'D'; 
+
+const nbr_ville_a_survoler = 5; // exemple on doit passer par 6 villes meme si on tourne en rond
+ 
 // parametres reglables
 const taux_mutation = 0.2; // proba mutation
 const taux_reproduction = 0.3; // on ne retient que 30% ny population les plus adaptees
-const nombre_population = 100;
+const nombre_population = 10;
 
 
 
@@ -37,10 +60,12 @@ function trierDecroissant(population) {
 }
 function individuRandom() {
 	let adn = [];
-	for(let i = 0; i < objectif.length; i++) {
-		let index_random = Math.floor(Math.random() * alphabet.length);
-		adn[i] = alphabet[index_random];
+	adn.push(depart);
+	for(let i = 1; i < (nbr_ville_a_survoler - 1); i++) {
+		let index_random = Math.floor( villes.length * Math.random() );
+		adn[i] = villes[index_random];
 	}
+	adn.push(arrive);
 	return new Individu(adn);
 }
 function initialiserPopulation() {
@@ -55,13 +80,15 @@ function initialiserPopulation() {
  * Coeur de l'algo
  */
 function evaluer(individu) {
-	let score = 0;
-	for(let i = 0; i < objectif.length; i++) {
-		if(individu.adn[i] == objectif[i]) {
-			score++;
-		}
+	let total_dist = 0;
+	for(let i = 1; i < nbr_ville_a_survoler; i++) {
+		let node_A = individu.adn[i-1];
+		let node_B = individu.adn[i];
+		// console.log(node_A, node_B, "dist", distances[ map_ville[node_A]  ] [ map_ville[node_B] ]);
+		total_dist += distances[ map_ville[node_A]  ] [ map_ville[node_B] ];
 	}
-	individu.score = score;
+	// plus la distance est grande plus c'est petit!
+	individu.score = total_dist == 0 ? 0 : 1 / total_dist;
 }
 
 function evaluerPopulation(population) {
@@ -72,10 +99,10 @@ function evaluerPopulation(population) {
 
 // mutation
 function effectuerMutation(individu) {
-	for(let i = 0; i < objectif.length; i++) {
+	for(let i = 1; i < (nbr_ville_a_survoler - 1); i++) {
 		if(Math.random() <= taux_mutation) {
-			let index_random = Math.floor(Math.random() * alphabet.length);
-			individu.adn[i] = alphabet[index_random];			
+			let index_random = Math.floor( villes.length * Math.random() );
+			individu.adn[i] = villes[index_random];
 		}
 	}
 }
@@ -83,8 +110,8 @@ function effectuerMutation(individu) {
 // accouplement
 function crossOver(pere, mere) {
 	let enfant = new Individu([]);
-	let moitie = Math.floor( objectif.length / 2 );
-	for(let i = 0; i < objectif.length; i++) {
+	let moitie = Math.floor( nbr_ville_a_survoler / 2 );
+	for(let i = 0; i < nbr_ville_a_survoler; i++) {
 		const gene = i < moitie ? pere.adn[i] : mere.adn[i];
 		enfant.adn.push( gene );
 	}
@@ -96,13 +123,13 @@ function crossOver(pere, mere) {
 /**
  * Algorithme genetique
  */
-let generation_max = 10000;
-let generation = 1; 
+let generation_max = 500;
+let generation = 1;
+let ancien_fitest = null;
 
 initialiserPopulation();
-
+console.log("Trajectoire minimale entre ", depart, arrive, " en passant par ", nbr_ville_a_survoler, "villes minimum (repetition inclus)");
 while( generation < generation_max ) {
-	// etape d'evaluation
 	evaluerPopulation( population );
 	
 	trierDecroissant( population );
@@ -111,16 +138,12 @@ while( generation < generation_max ) {
 	* Affichages
 	**/
 	let fitest = population[0]; //le fitest
-	if(fitest.score == objectif.length) {
-		console.log("* Sequence adn trouvee apres ", generation, " generations");
-		console.log("adn => ", fitest.adn.join(""));
-		break;
-	} else {
-		if(generation % 200 == 0) {
-			console.log(fitest.adn.join(""), " => note ",fitest.score , " generation ", generation);			
+	if(ancien_fitest != null) {
+		if(fitest.score > ancien_fitest.score) {
+			console.log(fitest.adn.join(""), " => note ",fitest.score , " => Distance tot. ", 1 / fitest.score,"Km, generation ", generation);		
 		}
 	}
-	
+	ancien_fitest = fitest;	
 	
 	/*
 	* Etape de selection + accouplement
@@ -130,7 +153,6 @@ while( generation < generation_max ) {
 	let parents = [];  // parents => les 'fitest'
 	let pourcentage_parent = taux_reproduction * population.length;
 	
-	// on choisi les parents
 	population.forEach( (individu, index) => {
 		if(index <= pourcentage_parent) {
 			parents.push( individu ); // parents
