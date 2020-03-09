@@ -127,10 +127,11 @@ let generation_max = 600;
 let generation = 1;
 let ancien_fitest = null;
 
-// gestion affichage evolution
+// gestion de l'affichage de l'evolution
 let stagne = false;
 let need_to_display = false;
 let smthin_displayed = false;
+// ----
 
 
 initialiserPopulation();
