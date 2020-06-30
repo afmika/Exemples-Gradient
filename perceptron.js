@@ -51,23 +51,6 @@ function RegleBackProp (etapes, pas) {
 		points.forEach(point => {
 			let output = sigmoid( prod(point.x, weights) );
 			let y = point.label;
-			for (let i = 0; i < point.x.length; i++) {
-				let xi = point.x[i];
-				let dw = -pas * (y - output) * output * (1 - output) * xi;
-				weights[i] += -dw; // on accumule chaque partie de la somme
-			}
-		});
-		etapes--;
-	}
-}
-
-function RegleBackProp (etapes, pas) {	
-	while(etapes > 0) {
-		// w[i] += dw[i]
-		// calcul de dw[i]
-		points.forEach(point => {
-			let output = sigmoid( prod(point.x, weights) );
-			let y = point.label;
 
 			// let changes = [];
 			
