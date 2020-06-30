@@ -4,9 +4,7 @@
  * Recherche du chemin le plus court en utilisant un algorithme genetique
  */
 
-/**
- * Dans cet exemple toutes les villes sont reliees
- */
+
 const villes = ['A', 'B', 'C', 'D', 'E', 'F'];
 const map_ville = {};  // juste pour faciliter l'identification des distances 
 villes.forEach((ville, index) => {
@@ -29,7 +27,7 @@ const distances = [
 const depart = 'A';
 const arrive = 'D'; 
 
-const nbr_ville_a_survoler = 5; // exemple on doit passer par 6 villes meme si on tourne en rond
+const nbr_ville_a_survoler = 5; // exemple on doit passer par 5 villes meme si on tourne en rond
  
 // parametres reglables
 const taux_mutation = 0.2; // proba mutation

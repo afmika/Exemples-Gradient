@@ -58,10 +58,10 @@ let points = [
 			
 		
 		/*
-		Pour un reseaux de neurone cette partie equivaut a :
+		Pour un perceptron cette partie equivaut a :
 		dwi = -dE/dwi = taux * xi * (yi - si);
+		[Note] : pour un perceptron si = activation(a*xi + b)
 		*/
-		
 		let si = a * xi + b; // juste pour clarifier les choses
 		// delta_a += -2 * xi * (yi - si);  // AVANT
 		delta_a += pas * xi * (yi - si);  // VERSION 2
@@ -70,7 +70,7 @@ let points = [
 	});
 	
 	/*
-	Pour un reseaux de neurone cette partie equivaut a :
+	Pour un perceptron cette partie equivaut a :
 	wi += dwi;
 	*/
 	
