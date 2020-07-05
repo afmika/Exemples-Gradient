@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Draw Curve</title>
+	</head>
+	<body>
+		<center>
+			<p>
+				Drawing a function using only it's derivative ( tangent )
+			</p>
+			<canvas id="canvas" width=400 height=400 style="border:2px Solid Black"></canvas>
+		</center>
+		<script>
+			/**
+			 * @author afmika
+			 */
+			const canvas = document.getElementById("canvas");
+			const ctx = canvas.getContext("2d");
+			const min_x = -canvas.width/2;
+			const max_x =  canvas.width/2;
+			const epsilon = 0.01;
+			
+			function f(x) {
+				// return Math.pow(x/8, 3);
+				return Math.pow(x/8, 2);
+			}
+			
+			function df(x) {
+				let dx = epsilon;
+				let dy = f(x+dx) - f(x);
+				return dy / dx;
+			}
+			
+			// init
+			let x = min_x;
+			let y = f(x);
+			
+			// drawing
+			function point(x, y) { 
+				ctx.fillRect(x + canvas.width/2, canvas.height/2 - y, 1, 1); 
+			}
+			
+			// we can retrieve the original curve (function) knowing 
+			// the rate of change at a given point
+			function draw_func () {
+				let dx = epsilon;
+				while ( x < max_x ) {
+					x += dx;
+					// dy/dx = f'(x) => dy = f'(x) * dx
+					y += df(x) * dx;
+					point(x, y); // puts the point on the screen
+				}
+			}
+			
+			draw_func();
+		</script>
+	</body>
+</html>
